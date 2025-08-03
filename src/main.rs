@@ -1,15 +1,19 @@
+use sea_orm::ColumnTrait;
+use sea_orm::QueryFilter;
 mod models;
 
-use crate::models::user_model::{UserModel, UserModelCreate};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::{get, post};
 use axum::{Json, Router};
 use chrono::Utc;
-use entity::user;
-use sea_orm::{ActiveModelTrait, Database, DatabaseConnection, Set};
+use migration::Condition;
+use sea_orm::{ActiveModelTrait, Database, DatabaseConnection, EntityTrait, Set};
 use serde_json::json;
 use uuid::Uuid;
+
+use crate::models::user_model::{UserModel, UserModelCreate};
+use entity::user;
 
 #[tokio::main]
 async fn main() {
@@ -39,6 +43,22 @@ async fn create_user(Json(u): Json<UserModelCreate>) -> impl IntoResponse {
         "postgres://postgres:postgres@localhost:5432/rust-vehicle-api".to_string()
     });
     let db: DatabaseConnection = Database::connect(db_connection).await.unwrap();
+
+    let user_exists = entity::user::Entity::find()
+        .filter(
+            Condition::all()
+                .add(user::Column::Email.eq(u.email.clone()))
+                .add(user::Column::Name.eq(u.name.clone())),
+        )
+        .one(&db)
+        .await
+        .unwrap();
+    if user_exists.is_some() {
+        return (
+            StatusCode::CONFLICT,
+            Json(json!({"error": "User already exists"})),
+        );
+    }
 
     let new_user = user::ActiveModel {
         id: Set(Uuid::new_v4()),
