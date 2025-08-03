@@ -7,4 +7,10 @@ GET {{baseUrl}}
 ###
 
 ### GET request to create a new user (test-route)
-GET {{baseUrl}}/users-create
+POST {{baseUrl}}/users-create
+Content-Type: {{contentType}}
+
+{
+  "name": "John Doe",
+  "email": "johndoe@gmail.com"
+}

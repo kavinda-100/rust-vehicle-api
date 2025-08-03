@@ -1,5 +1,6 @@
 mod models;
 
+use crate::models::user_model::{UserModel, UserModelCreate};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::{get, post};
@@ -19,7 +20,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(home))
         .route("/test", get(test))
-        .route("/users-create", get(create_user))
+        .route("/users-create", post(create_user))
         // handle 404 not found
         .fallback(not_found);
 
@@ -32,7 +33,7 @@ async fn main() {
     }
 }
 
-async fn create_user() -> impl IntoResponse {
+async fn create_user(Json(u): Json<UserModelCreate>) -> impl IntoResponse {
     // Get database URL from environment variable or use a default
     let db_connection = std::env::var("DATABASE_URL").unwrap_or_else(|_| {
         "postgres://postgres:postgres@localhost:5432/rust-vehicle-api".to_string()
@@ -41,8 +42,8 @@ async fn create_user() -> impl IntoResponse {
 
     let new_user = user::ActiveModel {
         id: Set(Uuid::new_v4()),
-        name: Set("John Doe".to_string()),
-        email: Set("john.doe@example.com".to_string()),
+        name: Set(u.name),
+        email: Set(u.email),
         created_at: Set(Utc::now().naive_utc()),
         updated_at: Set(Utc::now().naive_utc()),
     };
