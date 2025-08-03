@@ -2,9 +2,11 @@ use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::{Json, Router};
 use axum::routing::get;
+use sea_orm::{Database, DatabaseConnection};
 
 #[tokio::main]
 async fn main() {
+    let db: DatabaseConnection = Database::connect("protocol://username:password@host/database").await.expect("Database connection failed");
 
     // build our application with a single route
     let app = Router::new()
