@@ -6,11 +6,24 @@
 GET {{baseUrl}}
 ###
 
-### GET request to create a new user (test-route)
+### GET request to fetch all users (test-route)
+GET {{baseUrl}}/users
+
+### POST request to create a new user (test-route)
 POST {{baseUrl}}/users-create
 Content-Type: {{contentType}}
 
 {
-  "name": "John Doe",
-  "email": "johndoe@gmail.com"
+  "name": "Jane Doe",
+  "email": "janedoe@gmail.com"
+}
+
+### PATCH request to update user (test-route)
+PATCH {{baseUrl}}/users-update
+Content-Type: {{contentType}}
+
+{
+  "id": "3480a6e4-7602-4ced-8a58-78341d160fe1",
+  "name": "Jane Doe Updated",
+  "email": "janedoeupdated@gmail.com"
 }
