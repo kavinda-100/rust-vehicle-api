@@ -27,3 +27,6 @@ Content-Type: {{contentType}}
   "name": "Jane Doe Updated",
   "email": "janedoeupdated@gmail.com"
 }
+
+### DELETE request to delete user (test-route)
+DELETE {{baseUrl}}/users-delete/3480a6e4-7602-4ced-8a58-78341d160fe1
