@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/entity/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/migration/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/httpRequests" />
       <excludeFolder url="file://$MODULE_DIR$/migration/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

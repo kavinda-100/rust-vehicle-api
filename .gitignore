@@ -1,4 +1,6 @@
 /target
+entity/target
+migration/target
 .env
 .idea
 *.vscode
