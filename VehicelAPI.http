@@ -1,0 +1,10 @@
+### Variables
+@baseUrl = http://localhost:5000
+@contentType = application/json
+
+### GET request to home endpoint
+GET {{baseUrl}}
+###
+
+### GET request to create a new user (test-route)
+GET {{baseUrl}}/users-create
