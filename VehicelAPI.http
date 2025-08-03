@@ -14,8 +14,8 @@ POST {{baseUrl}}/users-create
 Content-Type: {{contentType}}
 
 {
-  "name": "Jane Doe",
-  "email": "janedoe@gmail.com"
+  "name": "new user",
+  "email": "new@gmail.com"
 }
 
 ### PATCH request to update user (test-route)
@@ -23,10 +23,10 @@ PATCH {{baseUrl}}/users-update
 Content-Type: {{contentType}}
 
 {
-  "id": "3480a6e4-7602-4ced-8a58-78341d160fe1",
-  "name": "Jane Doe Updated",
-  "email": "janedoeupdated@gmail.com"
+  "id": "9686f25d-512d-4535-ab3a-5548505728d3",
+  "name": "new user Updated",
+  "email": "new@gmail.com"
 }
 
 ### DELETE request to delete user (test-route)
-DELETE {{baseUrl}}/users-delete/3480a6e4-7602-4ced-8a58-78341d160fe1
+DELETE {{baseUrl}}/users-delete/9686f25d-512d-4535-ab3a-5548505728d3
