@@ -1,6 +1,8 @@
 use sea_orm::ColumnTrait;
 use sea_orm::QueryFilter;
 mod models;
+mod routes;
+mod controllers;
 
 use axum::extract::Path;
 use axum::http::StatusCode;
