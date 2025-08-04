@@ -1,6 +1,6 @@
 run:
 	cargo fmt
-	RUSTFLAGS="-A warnings" cargo run
+	RUSTFLAGS="-A warnings" cargo watch -x run
 
 # Run tests
 test:
