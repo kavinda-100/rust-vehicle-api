@@ -1,85 +1,90 @@
 # 🚗 Rust Vehicle API
 
-A modern, high-performance RESTful API built with Rust for vehicle management systems. This API provides comprehensive CRUD operations for user management with plans to expand to vehicle-specific functionalities.
+A high-performance RESTful API for vehicle management built with modern Rust technologies.
 
-## 🚀 Tech Stack
+## 🛠️ Tech Stack
 
-- **🦀 Rust** - Systems programming language focused on safety and performance
-- **⚡ Axum** - Ergonomic and modular web framework for Rust
-- **🌊 SeaORM** - Modern async ORM for Rust
-- **🐘 PostgreSQL** - Advanced open-source relational database
-- **🔧 Sea-ORM CLI** - Database migration and entity generation tools
+- **🦀 Rust** - Systems programming language
+- **⚡ Axum** - Fast and ergonomic web framework
+- **🌊 SeaORM** - Async & dynamic ORM for Rust
+- **🐘 PostgreSQL** - Robust relational database
+- **🔐 JWT** - JSON Web Tokens for authentication
+- **📦 Tokio** - Async runtime for Rust
 
-## ✨ Features
+## 🚀 Features
 
-- **Fast & Safe**: Built with Rust for maximum performance and memory safety
-- **Async/Await**: Fully asynchronous request handling
-- **Database Migrations**: Automated database schema management
-- **CORS Enabled**: Cross-origin resource sharing support
-- **RESTful Design**: Clean and intuitive API endpoints
-- **Error Handling**: Comprehensive error responses
-- **UUID Support**: Secure unique identifiers for all entities
+- ✅ User authentication and authorization
+- ✅ JWT-based security
+- ✅ RESTful API endpoints
+- ✅ Database migrations
+- ✅ CORS support
+- ✅ Error handling middleware
+- ✅ UUID primary keys
+- ✅ Async/await throughout
 
-## 📋 Current Endpoints
+## 🏗️ Project Structure
 
-### 🏠 General
-- `GET /` - Welcome message and API status
-- `GET /test` - Health check endpoint
+```
+rust-vehicle-api/
+├── 📁 src/
+│   ├── 🎯 main.rs              # Application entry point
+│   ├── 📁 controllers/         # Request handlers
+│   ├── 📁 middlewares/         # Auth & other middleware
+│   ├── 📁 models/              # Data models
+│   ├── 📁 routes/              # Route definitions
+│   └── 📁 utils/               # Utilities (JWT, errors)
+├── 📁 entity/                  # SeaORM entities
+├── 📁 migration/               # Database migrations
+├── 📄 Cargo.toml              # Rust dependencies
+└── 📄 .env                    # Environment variables
+```
 
-### 👥 User Management
-- `GET /users` - Retrieve all users
-- `POST /users-create` - Create a new user
-- `PATCH /users-update` - Update an existing user
-- `DELETE /users-delete/{uuid}` - Delete a user by UUID
-
-## 🛠️ Installation & Setup
+## 🔧 Setup & Installation
 
 ### Prerequisites
 
-- **Rust** (latest stable version)
-- **PostgreSQL** (version 12 or higher)
-- **Git**
+- Rust (latest stable version)
+- PostgreSQL
+- Sea-ORM CLI
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/kavinda-100/rust-vehicle-api.git
+git clone <your-repo-url>
 cd rust-vehicle-api
 ```
 
-### 2. Database Setup
-
-Create a PostgreSQL database:
-
-```sql
-CREATE DATABASE rust_vehicle_api;
-```
-
-### 3. Environment Configuration
-
-Create a `.env` file in the project root:
-
-```env
-DATABASE_URL=postgresql://username:password@localhost:5432/rust_vehicle_api
-```
-
-### 4. Install Dependencies
+### 2. Install dependencies
 
 ```bash
 cargo build
 ```
 
-### 5. Run Database Migrations
+### 3. Install SeaORM CLI
 
 ```bash
-# Install SeaORM CLI if not already installed
 cargo install sea-orm-cli
-
-# Run migrations
-sea-orm-cli migrate up
 ```
 
-### 6. Start the Server
+### 4. Setup database
+
+Create a PostgreSQL database and update your `.env` file:
+
+```env
+DATABASE_URL=postgres://username:password@localhost:5432/rust_vehicle_api
+JWT_SECRET=your-super-secure-secret-key-here
+JWT_EXPIRATION=86400
+SERVER_HOST=0.0.0.0
+SERVER_PORT=5000
+```
+
+### 5. Run migrations
+
+```bash
+sea-orm-cli migrate fresh
+```
+
+### 6. Start the server
 
 ```bash
 cargo run
@@ -87,138 +92,137 @@ cargo run
 
 The API will be available at `http://localhost:5000`
 
-## 📖 API Usage Examples
+## 📡 API Endpoints
 
-### Create a User
+### Authentication
 
-```bash
-curl -X POST http://localhost:5000/users-create \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "John Doe",
-    "email": "john.doe@example.com"
-  }'
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/register` | Register a new user |
+| POST | `/auth/login` | Login user |
 
-### Get All Users
+### Users
 
-```bash
-curl -X GET http://localhost:5000/users
-```
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/users` | Get all users | ✅ |
+| GET | `/users/:id` | Get user by ID | ✅ |
+| PUT | `/users/:id` | Update user | ✅ |
+| DELETE | `/users/:id` | Delete user | ✅ |
 
-### Update a User
+### Health Check
 
-```bash
-curl -X PATCH http://localhost:5000/users-update \
-  -H "Content-Type: application/json" \
-  -d '{
-    "id": "uuid-here",
-    "name": "John Smith",
-    "email": "john.smith@example.com"
-  }'
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | API status |
+| GET | `/test` | Test endpoint |
 
-### Delete a User
+## 🔐 Authentication
 
-```bash
-curl -X DELETE http://localhost:5000/users-delete/{uuid}
-```
-
-## 📁 Project Structure
+This API uses JWT (JSON Web Tokens) for authentication. Include the token in the Authorization header:
 
 ```
-rust-vehicle-api/
-├── 📁 src/
-│   ├── 📄 main.rs              # Application entry point
-│   ├── 📁 controllers/         # Request handlers
-│   │   └── 📄 user_controller.rs
-│   ├── 📁 models/              # Data models
-│   │   └── 📄 user_model.rs
-│   └── 📁 routes/              # Route definitions
-│       └── 📄 user_route.rs
-├── 📁 entity/                  # Database entities (SeaORM)
-│   ├── 📄 Cargo.toml
-│   └── 📁 src/
-│       ├── 📄 mod.rs
-│       ├── 📄 prelude.rs
-│       └── 📄 user.rs
-├── 📁 migration/               # Database migrations
-│   ├── 📄 Cargo.toml
-│   └── 📁 src/
-│       ├── 📄 lib.rs
-│       ├── 📄 main.rs
-│       └── 📄 m20220101_000001_create_table.rs
-├── 📄 Cargo.toml               # Project dependencies
-├── 📄 .env                     # Environment variables
-├── 📄 VehicelAPI.http          # HTTP request examples
-└── 📄 README.md                # Project documentation
+Authorization: Bearer <your-jwt-token>
 ```
 
-## 🗄️ Database Schema
+## 🗃️ Database Schema
 
 ### Users Table
 
-| Column     | Type      | Description                    |
-|------------|-----------|--------------------------------|
-| id         | UUID      | Primary key (auto-generated)  |
-| name       | VARCHAR   | User's full name               |
-| email      | VARCHAR   | User's email (unique)          |
-| created_at | TIMESTAMP | Record creation time           |
-| updated_at | TIMESTAMP | Last modification time         |
+| Column | Type | Constraints |
+|--------|------|-------------|
+| id | UUID | Primary Key, Default: gen_random_uuid() |
+| name | VARCHAR | NOT NULL |
+| email | VARCHAR | UNIQUE, NOT NULL |
+| created_at | TIMESTAMPTZ | NOT NULL, Default: CURRENT_TIMESTAMP |
+| updated_at | TIMESTAMPTZ | NOT NULL, Default: CURRENT_TIMESTAMP |
 
-## 🔧 Development
+## 🐛 Troubleshooting
 
-### Running Migrations
+### Common Issues
+
+1. **UUID Auto-increment Error**
+   ```
+   not implemented: Uuid doesn't support auto increment
+   ```
+   **Solution**: Use `gen_random_uuid()` as default value instead of auto-increment.
+
+2. **Database Authentication Failed**
+   ```
+   password authentication failed for user "username"
+   ```
+   **Solution**: Update DATABASE_URL in `.env` with correct credentials.
+
+3. **Migration Issues**
+   ```bash
+   # Reset migrations
+   sea-orm-cli migrate fresh
+   
+   # Check migration status
+   sea-orm-cli migrate status
+   ```
+
+## 🔨 Development
+
+### Generate new migration
 
 ```bash
-# Create a new migration
-sea-orm-cli migrate generate create_vehicle_table
-
-# Apply pending migrations
-sea-orm-cli migrate up
-
-# Rollback last migration
-sea-orm-cli migrate down
-
-# Reset database (drop all tables and reapply migrations)
-sea-orm-cli migrate fresh
+sea-orm-cli migrate generate create_vehicles_table
 ```
 
-### Code Generation
-
-Generate entities from database schema:
+### Generate entities from database
 
 ```bash
 sea-orm-cli generate entity -o entity/src
 ```
 
-### Testing
+### Run tests
 
 ```bash
-# Run all tests
 cargo test
-
-# Run tests with output
-cargo test -- --nocapture
 ```
+
+### Format code
+
+```bash
+cargo fmt
+```
+
+### Lint code
+
+```bash
+cargo clippy
+```
+
+## 📝 Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DATABASE_URL` | PostgreSQL connection string | Required |
+| `JWT_SECRET` | Secret key for JWT tokens | Required |
+| `JWT_EXPIRATION` | Token expiration time (seconds) | 86400 |
+| `SERVER_HOST` | Server bind address | 0.0.0.0 |
+| `SERVER_PORT` | Server port | 5000 |
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
-
-**Your Name**
-- GitHub: [@kavinda](https://github.com/kavinda-100)
-- Email: your.email@example.com
-
 ## 🙏 Acknowledgments
 
-- [Axum](https://github.com/tokio-rs/axum) - Web framework
-- [SeaORM](https://github.com/SeaQL/sea-orm) - ORM for Rust
-- [Tokio](https://github.com/tokio-rs/tokio) - Async runtime
-- [Serde](https://github.com/serde-rs/serde) - Serialization framework
+- Built with ❤️ using Rust
+- Powered by the amazing Rust ecosystem
+- SeaORM for making database operations enjoyable
+- Axum for the fantastic web framework
 
 ---
 
-⭐ **Star this repository if you find it helpful!**
+⭐ **Star this repo if you find it helpful!**

@@ -2,6 +2,7 @@ mod controllers;
 mod models;
 mod routes;
 mod utils;
+mod middlewares;
 
 use axum::http::{Method, StatusCode};
 use axum::response::IntoResponse;
