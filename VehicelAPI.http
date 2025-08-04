@@ -34,3 +34,13 @@ Content-Type: {{contentType}}
 
 ### DELETE request to delete user (test-route)
 DELETE {{baseUrl}}/users-delete/487c5027-74f0-4419-b180-c7d95876da44
+
+
+### POST request authentication (test-route)
+POST {{baseUrl}}/auth
+Content-Type: {{contentType}}
+
+{
+  "name": "new user",
+  "email": "new@gmail.com"
+}
