@@ -35,6 +35,7 @@ async fn main() {
         .route("/test", get(test))
         // include the user routes
         .merge(routes::user_route::user_router())
+        .merge(routes::auth_route::auth_router())
         // handle 404 not found
         .fallback(not_found)
         // add CORS middleware;
