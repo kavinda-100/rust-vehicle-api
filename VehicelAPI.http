@@ -6,6 +6,10 @@
 GET {{baseUrl}}
 ###
 
+### GET request to test endpoint
+GET {{baseUrl}}/test
+###
+
 ### GET request to fetch all users (test-route)
 GET {{baseUrl}}/users
 
@@ -15,7 +19,7 @@ Content-Type: {{contentType}}
 
 {
   "name": "new user",
-  "email": "new@gmail.com"
+  "email": "new2@gmail.com"
 }
 
 ### PATCH request to update user (test-route)
@@ -23,10 +27,10 @@ PATCH {{baseUrl}}/users-update
 Content-Type: {{contentType}}
 
 {
-  "id": "9686f25d-512d-4535-ab3a-5548505728d3",
-  "name": "new user Updated",
-  "email": "new@gmail.com"
+  "id": "487c5027-74f0-4419-b180-c7d95876da44",
+  "name": "new user 2 Updated",
+  "email": "new2@gmail.com"
 }
 
 ### DELETE request to delete user (test-route)
-DELETE {{baseUrl}}/users-delete/9686f25d-512d-4535-ab3a-5548505728d3
+DELETE {{baseUrl}}/users-delete/487c5027-74f0-4419-b180-c7d95876da44

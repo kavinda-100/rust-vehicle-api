@@ -1,5 +1,5 @@
-use axum::http::{header, StatusCode};
 use axum::Json;
+use axum::http::{StatusCode, header};
 use axum::response::{IntoResponse, Response};
 use serde_json::json;
 
@@ -12,10 +12,15 @@ pub struct ApiError {
 impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let status = self.status_code;
-        (status, [(header::CONTENT_TYPE, "application/json")], Json(json!({
-            "status": status.as_u16(),
-            "message": self.message,
-            "error": true,
-        }))).into_response()
+        (
+            status,
+            [(header::CONTENT_TYPE, "application/json")],
+            Json(json!({
+                "status": status.as_u16(),
+                "message": self.message,
+                "error": true,
+            })),
+        )
+            .into_response()
     }
 }
